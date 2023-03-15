@@ -40,7 +40,8 @@ class AttendanceDatabase {
 
   static Future<DataSnapshot> getAttendanceBasedOnUID(String uid) async {
     DataSnapshot dataSnapshot =
-        (await _databaseReference.child("Attendance").child(uid).once()).snapshot;
+        (await _databaseReference.child("Attendance").child(uid).once())
+            .snapshot;
     return dataSnapshot;
   }
 
@@ -48,7 +49,9 @@ class AttendanceDatabase {
       String uid, DateTime dateTime) async {
     DataSnapshot snapshot = await getAttendanceBasedOnUID(uid);
     String formattedDate = getFormattedDate(dateTime);
-    return snapshot.value == null ? null : (snapshot.value as Map)[formattedDate];
+    return snapshot.value == null
+        ? null
+        : (snapshot.value as Map)[formattedDate];
   }
 
   static Future<Map<String, String>> getOfficeFromID() async {
@@ -82,8 +85,7 @@ class AttendanceDatabase {
       "time": time,
     };
     String markChild = markType + "-" + time;
-    return _databaseReference
-        .ref
+    return _databaseReference.ref
         .child("Attendance")
         .child(uid)
         .child(date)
