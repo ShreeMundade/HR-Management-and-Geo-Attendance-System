@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geo_attendance_system/src/services/fetch_IMEI.dart';
 import 'package:geo_attendance_system/src/ui/constants/colors.dart';
 import 'package:geo_attendance_system/src/ui/pages/homepage.dart';
-import 'package:geo_attendance_system/src/ui/widgets/Info_dialog_box.dart';
 import 'package:geo_attendance_system/src/ui/widgets/loader_dialog.dart';
 
 import '../../services/authentication.dart';
@@ -22,7 +21,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final _formKey = new GlobalKey<FormState>();
-  FirebaseDatabase db = new FirebaseDatabase();
+  FirebaseDatabase db = FirebaseDatabase.instance;
   late DatabaseReference _empIdRef, _userRef;
 
   String? _username;
@@ -34,8 +33,8 @@ class _LoginState extends State<Login> {
 
   @override
   void initState() {
-    _userRef = db.reference().child("users");
-    _empIdRef = db.reference().child('EmployeeID');
+    _userRef = db.ref().child("users");
+    _empIdRef = db.ref().child('EmployeeID');
     authObject = new Auth();
 
     super.initState();
@@ -80,6 +79,7 @@ class _LoginState extends State<Login> {
     DataSnapshot dataSnapshot =
         (await _userRef.child(_user.uid).once()).snapshot;
 
+    // ignore: unnecessary_null_comparison
     if (dataSnapshot != null) {
       var uuid = (dataSnapshot.value as Map)["UUID"];
       List listOfDetails = await getDeviceDetails();
@@ -119,7 +119,7 @@ class _LoginState extends State<Login> {
         //         "ATTENTION!",
         //         "\nUnauthorized Access Detected!\nIf you are a Legit user, Kindly Contact HR Dept for the same",
         //         "assets/gif/no_entry.gif",
-        //         Color.fromRGBO(170, 160, 160, 1.0),
+        //         Color.(170, 160, 160, 1.0),
         //         "Ok");
         //   }
         // });
@@ -175,7 +175,7 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-    ScreenUtil.init(context, designSize: Size(750, 1334), minTextAdapt: true);
+    ScreenUtil.init(context, designSize: Size(760, 1350), minTextAdapt: true);
     return new Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: true,
@@ -229,14 +229,15 @@ class _LoginState extends State<Login> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
-                              Text("GeoFlix",
+                              Text("AMS",
                                   style: TextStyle(
                                       fontFamily: "Poppins-Bold",
                                       color: appbarcolor,
                                       fontSize: ScreenUtil().setSp(90),
                                       letterSpacing: .6,
                                       fontWeight: FontWeight.bold)),
-                              Text("Geo-Attendance and HR Management System",
+                              Text(
+                                  "Geo Attendance with facial recognition System",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       fontFamily: "Poppins-Bold",
@@ -277,7 +278,7 @@ class _LoginState extends State<Login> {
                         InkWell(
                           child: Container(
                             width: ScreenUtil().setWidth(330),
-                            height: ScreenUtil().setHeight(100),
+                            height: ScreenUtil().setHeight(105),
                             decoration: BoxDecoration(
                                 gradient: LinearGradient(colors: [
                                   splashScreenColorBottom,
@@ -299,7 +300,7 @@ class _LoginState extends State<Login> {
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontFamily: "Poppins-Bold",
-                                          fontSize: 18,
+                                          fontSize: 14,
                                           letterSpacing: 1.0)),
                                 ),
                               ),
@@ -309,7 +310,7 @@ class _LoginState extends State<Login> {
                       ],
                     ),
                     SizedBox(
-                      height: ScreenUtil().setHeight(40),
+                      height: ScreenUtil().setHeight(42),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -356,7 +357,7 @@ class _LoginState extends State<Login> {
   Widget formCard() {
     return new Container(
       width: double.infinity,
-      height: 260,
+      height: 265,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(8.0),

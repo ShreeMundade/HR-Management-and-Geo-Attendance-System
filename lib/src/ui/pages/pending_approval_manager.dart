@@ -13,7 +13,7 @@ class LeaveApprovalByManagerWidget extends StatefulWidget {
       : super(key: key);
   final String title;
   final User user;
-  final FirebaseDatabase db = new FirebaseDatabase();
+  final FirebaseDatabase db = FirebaseDatabase.instance;
 
   @override
   LeaveApprovalByManagerWidgetState createState() =>
@@ -81,14 +81,14 @@ class LeaveApprovalByManagerWidgetState
                       ),
                     );
                   return ListView.builder(
-                    itemCount: snapshot.data?.length,
-//                    itemExtent: 200.0,
+                    itemCount: (snapshot.data as List<dynamic>?)?.length ?? 0,
                     itemBuilder: (context, index) {
-                      Leave leave = snapshot.data![index];
+                      Leave leave =
+                          (snapshot.data as List<dynamic>)[index] as Leave;
                       if (leave.status == LeaveStatus.pending &&
-                          leave.withdrawalStatus == false)
-                        return leaveRow(snapshot.data![index]);
-
+                          !leave.withdrawalStatus) {
+                        return leaveRow(leave);
+                      }
                       return Container();
                     },
                   );
@@ -292,63 +292,48 @@ Icon getIcon(LeaveStatus leaveStatus) {
   switch (leaveStatus) {
     case LeaveStatus.approved:
       return listOfIcons[0];
-      break;
 
     case LeaveStatus.pending:
       return listOfIcons[1];
-      break;
 
     case LeaveStatus.rejected:
       return listOfIcons[2];
-      break;
 
     case LeaveStatus.undetermined:
       return listOfIcons[2];
-      break;
   }
-  return listOfIcons[2];
 }
 
 Color getColor(LeaveStatus leaveStatus) {
   switch (leaveStatus) {
     case LeaveStatus.approved:
       return listOfColors[0];
-      break;
 
     case LeaveStatus.pending:
       return listOfColors[1];
-      break;
 
     case LeaveStatus.rejected:
       return listOfColors[2];
-      break;
 
     case LeaveStatus.undetermined:
       return listOfColors[2];
-      break;
   }
-  return listOfColors[2];
 }
 
 String getStatus(LeaveStatus leaveStatus) {
   switch (leaveStatus) {
     case LeaveStatus.approved:
       return "Approved";
-      break;
 
     case LeaveStatus.pending:
       return "Pending";
-      break;
 
     case LeaveStatus.rejected:
       return "Rejected";
-      break;
 
     case LeaveStatus.undetermined:
       return "Pending";
-      break;
   }
-  return "Pending";
 }
 
 String getDoubleDigit(String value) {
@@ -369,21 +354,16 @@ String getLeaveType(LeaveType leaveType) {
   switch (leaveType) {
     case LeaveType.al:
       return "Annual Leave";
-      break;
 
     case LeaveType.ml:
       return "Medical Leave";
-      break;
 
     case LeaveType.cl:
       return "Casual Leave";
-      break;
 
     case LeaveType.undetermined:
       return "Leave";
-      break;
   }
-  return "Leave";
 }
 
 DateTime formattedProperDateTime(String date) {

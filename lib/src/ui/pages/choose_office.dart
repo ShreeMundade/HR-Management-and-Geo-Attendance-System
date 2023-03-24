@@ -51,6 +51,7 @@ class ChooseOfficeWidget extends StatefulWidget {
 
 class ChooseOfficeWidgetState extends State<ChooseOfficeWidget> {
   int _currentIndex = 0;
+  // ignore: unused_field
   final List<Widget> _children = [];
 
   void onTabTapped(int index) {

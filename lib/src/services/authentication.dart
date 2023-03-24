@@ -40,7 +40,6 @@ class Auth implements BaseAuth {
   }
 
   Future<void> sendEmailVerification() async {
-
     User user = _firebaseAuth.currentUser!;
     user.sendEmailVerification();
   }

@@ -5,7 +5,6 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:geo_attendance_system/src/services/authentication.dart';
 import 'package:geo_attendance_system/src/ui/constants/colors.dart';
 import 'package:geo_attendance_system/src/ui/constants/dashboard_tile_info.dart';
-import 'package:geo_attendance_system/src/ui/pages/pending_approval_manager.dart';
 import 'package:geo_attendance_system/src/ui/pages/profile_page.dart';
 import 'package:geo_attendance_system/src/ui/widgets/dashboard_tile.dart';
 
@@ -143,7 +142,7 @@ class NavigationPanel extends StatefulWidget {
 }
 
 class _NavigationPanelState extends State<NavigationPanel> {
-  final _databaseReference = FirebaseDatabase.instance.reference();
+  final _databaseReference = FirebaseDatabase.instance.ref();
 
   Widget drawerTile(String title, Function() onTap, [IconData? icon]) {
     return Padding(
@@ -160,6 +159,7 @@ class _NavigationPanelState extends State<NavigationPanel> {
               if (states.contains(MaterialState.hovered)) {
                 return Colors.transparent;
               }
+              return null;
             },
           ),
           side: MaterialStateProperty.resolveWith(
@@ -192,16 +192,18 @@ class _NavigationPanelState extends State<NavigationPanel> {
   }
 
   Future<String> fetchOfficeName() async {
-    DataSnapshot dataSnapshot =( await _databaseReference
-        .child("users")
-        .child(widget.user.uid)
-        .child("allotted_office")
-        .once()).snapshot;
+    DataSnapshot dataSnapshot = (await _databaseReference
+            .child("users")
+            .child(widget.user.uid)
+            .child("allotted_office")
+            .once())
+        .snapshot;
     DataSnapshot snapshot = (await _databaseReference
-        .child("location")
-        .child(dataSnapshot.value as String)
-        .child("name")
-        .once()).snapshot;
+            .child("location")
+            .child(dataSnapshot.value as String)
+            .child("name")
+            .once())
+        .snapshot;
     return snapshot.value as String;
   }
 
@@ -238,8 +240,6 @@ class _NavigationPanelState extends State<NavigationPanel> {
                       drawerTile("Allocated Location: ${snapshot.data}", () {},
                           Icons.location_on),
                     ]);
-
-                    return Container();
                 }
               },
             ),
@@ -269,30 +269,28 @@ class _NavigationPanelState extends State<NavigationPanel> {
                         'Error:\n\n${snapshot.error}',
                         textAlign: TextAlign.center,
                       );
-                    print(snapshot.data?.snapshot.value);
-                    if (snapshot.data?.snapshot.value == null ||
-                        snapshot.data?.snapshot.value == 1)
-                      // return Stack(children: [
-                      //   drawerTile("Review Pending Leaves", () {
-                      //     Navigator.of(context).push(MaterialPageRoute(
-                      //         builder: (context) =>
-                      //             LeaveApprovalByManagerWidget(
-                      //               title: "Review Leaves",
-                      //               user: widget.user,
-                      //             )));
-                      //   }, Icons.perm_identity),
-                      //   Positioned(
-                      //     child: Icon(
-                      //       Icons.notifications,
-                      //       color: Colors.yellow,
-                      //       size: 30,
-                      //     ),
-                      //     right: 17,
-                      //     height: 40,
-                      //   ),
-                      // ]);
-                      return Container();
-
+                    // print(snapshot.data?.snapshot.value);
+                    // if (snapshot.data?.snapshot.value == null ||
+                    //     snapshot.data?.snapshot.value == 1)
+                    // return Stack(children: [
+                    //   drawerTile("Review Pending Leaves", () {
+                    //     Navigator.of(context).push(MaterialPageRoute(
+                    //         builder: (context) =>
+                    //             LeaveApprovalByManagerWidget(
+                    //               title: "Review Leaves",
+                    //               user: widget.user,
+                    //             )));
+                    //   }, Icons.perm_identity),
+                    //   Positioned(
+                    //     child: Icon(
+                    //       Icons.notifications,
+                    //       color: Colors.yellow,
+                    //       size: 30,
+                    //     ),
+                    //     right: 17,
+                    //     height: 40,
+                    //   ),
+                    // ]);
                     return Container();
                 }
               },

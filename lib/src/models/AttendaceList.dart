@@ -1,12 +1,10 @@
-import 'package:firebase_database/firebase_database.dart';
 import 'package:geo_attendance_system/src/ui/constants/attendance_type.dart';
 
 class AttendanceList {
   DateTime dateTime = DateTime.now();
   List<Attendance> attendanceList = [];
-  final _databaseReference = FirebaseDatabase.instance.reference();
 
-  AttendanceList({required this.dateTime,required  this.attendanceList});
+  AttendanceList({required this.dateTime, required this.attendanceList});
 
   DateTime get date {
     return dateTime;
@@ -44,5 +42,5 @@ class Attendance {
   DateTime time;
   String office;
 
-  Attendance({required this.type,required  this.time,required  this.office});
+  Attendance({required this.type, required this.time, required this.office});
 }

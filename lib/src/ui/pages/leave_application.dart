@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:geo_attendance_system/src/ui/constants/colors.dart';
 import 'package:geo_attendance_system/src/ui/widgets/loader_dialog.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:grouped_buttons/grouped_buttons.dart';
 
 import 'leave_status.dart';
@@ -14,7 +17,7 @@ class LeaveApplicationWidget extends StatefulWidget {
       : super(key: key);
   final String title;
   final User user;
-  final FirebaseDatabase db = new FirebaseDatabase();
+  final FirebaseDatabase db = FirebaseDatabase.instance;
 
   @override
   LeaveApplicationWidgetState createState() => LeaveApplicationWidgetState();
@@ -22,7 +25,8 @@ class LeaveApplicationWidget extends StatefulWidget {
 
 class LeaveApplicationWidgetState extends State<LeaveApplicationWidget>
     with SingleTickerProviderStateMixin {
-  FirebaseDatabase db = FirebaseDatabase();
+  FirebaseDatabase db = FirebaseDatabase.instance;
+  // ignore: unused_field
   User? _user;
   late DatabaseReference _userRef, _managerRef, _leaveRef;
   String _managerName = '', _managerDesignation = '';
@@ -61,14 +65,15 @@ class LeaveApplicationWidgetState extends State<LeaveApplicationWidget>
   int leaveIndex = -1;
   List<Widget> list = [];
 
+  // ignore: unused_field
   String? _errorMessage;
 
   @override
   void initState() {
     super.initState();
-    _userRef = db.reference().child("users");
-    _leaveRef = db.reference().child("leaves");
-    _managerRef = db.reference().child("managers");
+    _userRef = db.ref().child("users");
+    _leaveRef = db.ref().child("leaves");
+    _managerRef = db.ref().child("managers");
     _getManager();
     _getLeaves().then((DatabaseEvent databaseEvent) {
       setState(() {
