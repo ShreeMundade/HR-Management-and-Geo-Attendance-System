@@ -55,6 +55,7 @@ class _ContactItem extends StatelessWidget {
       {Key? key,
       required this.icon,
       required this.lines,
+      // ignore: unused_element
       this.tooltip,
       required this.onPressed})
       : assert(lines.length > 1),

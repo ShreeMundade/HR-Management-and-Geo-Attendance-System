@@ -4,6 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:geo_attendance_system/src/models/leave.dart';
 
 class LeaveDatabase {
+  // ignore: deprecated_member_use
   final _databaseReference = FirebaseDatabase.instance.reference();
   static final LeaveDatabase _instance = LeaveDatabase._internal();
 
@@ -34,9 +35,9 @@ class LeaveDatabase {
 
   Future<List<Leave>> getLeaveListBasedOnUID(String uid) async {
     DataSnapshot dataSnapshot =
-       ( await _databaseReference.child("leaves").child(uid).once()).snapshot;
+        (await _databaseReference.child("leaves").child(uid).once()).snapshot;
     List<Leave> result = [];
-    if (dataSnapshot == null || dataSnapshot.value == null) return result;
+    if (dataSnapshot.value == null) return result;
 
     var officeMap = dataSnapshot.value;
     (officeMap as Map).forEach((key, map) {

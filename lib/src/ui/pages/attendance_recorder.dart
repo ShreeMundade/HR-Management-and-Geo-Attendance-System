@@ -33,6 +33,7 @@ class AttendanceRecorderWidgetState extends State<AttendanceRecorderWidget> {
   StreamSubscription<LocationData>? _locationSubscription;
   LocationData? _currentLocation;
   LatLng previousLocation = LatLng(0, 0);
+  // ignore: unused_field
   LocationData? _startLocation;
   Set<Marker> _markers = {};
   Set<Circle> _circles = new Set();
@@ -236,6 +237,7 @@ class AttendanceRecorderWidgetState extends State<AttendanceRecorderWidget> {
     }
   }
 
+  // ignore: unused_element
   Future<void> _gotoLocation(double lat, double long) async {
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(

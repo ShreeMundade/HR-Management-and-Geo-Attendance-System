@@ -23,14 +23,17 @@ or reject the leaves applied for, by an employee under him.
 - **Cloud Notification** - Push Notifications on leave status change
 
 ### Admin Application
+
 <a href="https://github.com/deepaktiwari88/HR-Management-and-Geo-Attendance-System-Admin-App">Link to Administrator Application</a>
 
 ## Setting Up the Project
 
 ### Firebase Console Set up
+
 Add/Replace your google-services.json (downloadable from your firebase console) file into android/app directory. The project is built upon Real time database offered by Google Firebase. It is tailored right now according to our team needs. E.g. the login functionality is using an Employee ID, which we accomplished by mapping email ID to Unique ID (Employee ID). Enable the email authentication in the Auth Tab of Firebase Project.
 <br><img src="assets/github/users.png" width="250"> <br>
 The Location of the various sites are stored in the Location Stub of RTDB with key as unique ID and parameters as
+
 - latitude(double)
 - longitude(double)
 - name(string)
@@ -44,7 +47,9 @@ I will attach a JSON sample file(in the root directory) which you can use to pre
 At last, Kindly update the google API key in the android manifest and enable the necessary Maps API on your API console. <a href="https://console.developers.google.com">Google Developer API console</a>
 
 ### Cloud Functions
+
 Push Notifications has been enabled in the application to provide update regarding the Leave Application from Manager.
+
 ```
 # Install firebase in the node environment
 npm install -g firebase-tools
@@ -55,6 +60,7 @@ firebase login
 # Deploy the functions. Move to Cloud directory and perform this operation
 firebase deploy
 ```
+
 For more info, please refer: <a href="https://firebase.google.com/docs/functions/get-started">Firebase Cloud Functions</a>
 
 ## Running the Project
@@ -68,7 +74,6 @@ flutter run
 ```
 
 ## Screenshots
-
 
 <img src="assets/github/landing.jpg" width="200" > &nbsp; <img
 src="assets/github/login.jpg" width="200"> &nbsp; <img
